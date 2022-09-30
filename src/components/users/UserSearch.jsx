@@ -14,13 +14,14 @@ function UserSearch() {
     // set empty state - text coming from input-value - initial state ""
 
     const [text, setText] = useState("")
-    
+
     // change state to value of whatever's typed into input onChange
 
     const handleChange = (e) => {
         setText(e.target.value)
     }
 
+    // triggered by clicking 'go' button
     const handleSubmit = (e) => {
         e.preventDefault()
         

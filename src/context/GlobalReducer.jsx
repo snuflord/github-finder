@@ -7,7 +7,7 @@ const globalReducer = (state, action) => {
             return {
                 // state spread operator here gets empty state===initialState from globalContext
                 ...state,
-                // empty 'users' array is populated with 'data' from API, delivered by dispatch:payload:data 
+                // empty 'users' array (from initialState) is populated with 'data' from API, delivered by dispatch:payload:items. items===data
                 users: action.payload,
                 // The initialState loading bool is updated from true to false
                 loading: false,
@@ -27,7 +27,13 @@ const globalReducer = (state, action) => {
                 ...state,
                 user: action.payload,
                 loading: false,
-            }    
+            }
+        case 'GET_REPOS':
+            return {
+                ...state,
+                repos: action.payload,
+                loading: false,
+            }      
         default: 
         return (
             state )

@@ -12,13 +12,15 @@ import globalReducer from './GlobalReducer'
         const initialState = {
             users: [],
             user: {},
+            repos: [],
             loading: false,
         }
 
         // declaring state and dispatch method to equal reducer method and initialstate value.
         const [state, dispatch] = useReducer(globalReducer, initialState)
 
-        // Get search results
+        // GET SEARCH RESULTS
+
         const searchUsers = async (text) => {
             setLoading()
 
@@ -76,10 +78,31 @@ import globalReducer from './GlobalReducer'
             }
         }
 
+        const getUserRepos = async (login) => {
+            setLoading()
+
+            // topten gets 10 recently created repos
+            const topten = new URLSearchParams({sort: 'created', per_page: 10})
+            // response gets github data for specific 'login'
+            const response = await fetch(`${GITHUB_URL}/users/${login}/repos?${topten}`, {
+                headers: {
+                Authorization: `token ${GITHUB_TOKEN}`,
+                    },
+            })
+
+            const repos = await response.json()
+            dispatch({
+                // GlobalReducer case will check for this type.
+                type: 'GET_REPOS',
+                payload: repos,
+            })
+        }
+        
+
 
         return (
         // users prop takes in updated state.users array/ loading prop = updated state/updated boolean.
-        <GlobalContext.Provider value={{searchUsers, clearUser, getUser, users: state.users, loading: state.loading, user: state.user}}>
+        <GlobalContext.Provider value={{searchUsers, clearUser, getUser, getUserRepos, users: state.users, loading: state.loading, user: state.user, repos: state.repos}}>
             {children}
         </GlobalContext.Provider>
         )
