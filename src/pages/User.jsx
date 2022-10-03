@@ -17,7 +17,7 @@ function User() {
   useEffect(() => {
 
     dispatch({type: 'SET_LOADING'})
-    // declaring new functin here to contain the async function getUserAndRepos
+    // declaring new functin here to contain the async function getUserAndRepos.
     const getUserData = async () => {
 
       // The data returned from getUserAndRepos (wich contains the get requets for both the profile and repos) is then dispatched to the globalReducer here. The state updates, and then the updated data is called again...
