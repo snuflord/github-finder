@@ -23,9 +23,15 @@ export const searchUsers = async (text) => {
 // GET USER AND REPOS
 
 export const getUserAndRepos = async(login) => {
+
+    const params = new URLSearchParams({
+        sort: 'created',
+        per_page: 10,
+    })
+    
     const [user, repos] = await Promise.all([
         github.get(`/users/${login}`),
-        github.get(`/users/${login}/repos`)
+        github.get(`/users/${login}/repos?${params}`)
     ])
     // We can group two get requets togrther like so - These objects are returned to the GlobalReducer in 'GET_USER_AND_REPOS' to update the state. The state is updated when the action is called for this getUserAndRepos function in the User useEffect hook. 
     return {user: user.data, repos: repos.data}
