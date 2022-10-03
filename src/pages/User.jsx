@@ -12,16 +12,17 @@ function User() {
   const { dispatch, user, loading, repos } = useContext(GlobalContext)
   const params = useParams()
 
-  // HERE, instead of updating the data through Global Context, the functions that handle data are called directly from functions in GithubActions: getUser, and getUserRepos. These functions contain the returned data from the fetch requests for both the user profile and user repos. Remember, 'dispatch' is contiguous with the initial state, therefore the state can be updated here by dispatching the action to the GlobalReducer, which handles updating the state data.
+  // HERE, instead of updating the data through Global Context, the functions that handle data are called directly from the function in GithubActions: getUserAndRepos. This function contains the returned data from the get requests requests for both the user profile and user repos. Remember, 'dispatch' is contiguous with the initial state, therefore the state can be updated here by dispatching the action to the GlobalReducer, which handles updating the state data.
 
   useEffect(() => {
 
     dispatch({type: 'SET_LOADING'})
-
+    // declaring new functin here to contain the async function getUserAndRepos
     const getUserData = async () => {
 
       // The data returned from getUserAndRepos (wich contains the get requets for both the profile and repos) is then dispatched to the globalReducer here. The state updates, and then the updated data is called again...
       const userData = await getUserAndRepos(params.login)
+      // this new variable userData contains the returned data for both repos and user.
       dispatch({type: 'GET_USER_AND_REPOS', payload: userData})
 
     }
