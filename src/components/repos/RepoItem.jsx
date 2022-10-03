@@ -1,12 +1,10 @@
-import {useContext} from 'react'
-import GlobalContext from "../../context/GlobalContext"
-import Spinner from "../layout/Spinner"
+
 import PropTypes from 'prop-types'
 import {FaEye, FaInfo, FaLink, FaStar, FaUtensils} from 'react-icons/fa'
 
 function RepoItem({repo}) {
 
-    const {getUserRepos, repos, loading, user} = useContext(GlobalContext)
+
 
     const {
       name,
@@ -33,7 +31,7 @@ function RepoItem({repo}) {
           <div className="mr-2 badge badge-success badge-lg rounded-2xl">
             <FaStar className='mr-2' /> {stargazers_count}
           </div>
-          <div className="mr-2 badge badge-error rounded-2xl">
+          <div className="mr-2 badge badge-error py-3 rounded-2xl">
             <FaInfo className='mr-2' /> {open_issues}
           </div>
           <div className="mr-2 badge badge-info badge-lg rounded-2xl">

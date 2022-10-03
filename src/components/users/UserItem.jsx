@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 
-// The Link in this component corresponds to the <Route path='/user/:login' element={<User/>}/> in App.js. The link in each UserItem component is unique to each userItem rendered, as the URL path is set to the :login (the username) of each user found from the  users.map process.
+// The Link in this component corresponds to the <Route path='/user/:login' element={<User/>}/> in App.js. The link in each UserItem component is unique to each userItem rendered, as the URL path is set to the :login (the username) of each user found from the users.map process.
 
 // user is ( {OBJECT} ) returned from users.map (users is 'items' from GlobalContext)
 function UserItem({ user: {login, avatar_url} }) {

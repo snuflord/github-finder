@@ -48,7 +48,7 @@ function UserSearch() {
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
-            {isFailed == true &&
+            {isFailed === true &&
         <div className="fixed top-0 right-0 p-32"><Alert /></div>
             }
         <div>

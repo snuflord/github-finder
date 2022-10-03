@@ -9,6 +9,7 @@ import RepoResults from '../components/repos/RepoResults'
 function User() {
 
   const {getUser, getUserRepos, user, loading, repos} = useContext(GlobalContext)
+  // Use params allows us to get the 'login' parameter from GlobalContext function getUser. We append .login to params in this scope. This params.login creates a variable URl for each user search when the visit user link is clicked in UserItem, which links to this User page (this file).
   const params = useParams()
 
   useEffect(() => {
@@ -49,7 +50,7 @@ function User() {
           <div className="custom-card-image mb-6 md:mb-0">
             <div className="rounded-lg shadow-xl card image-full">
               <figure>
-                <img src={avatar_url}></img>
+                <img src={avatar_url} alt="user avatar"></img>
               </figure>
               <div className="card-body relative">
                 <div className='absolute bottom-8 left-8'>
