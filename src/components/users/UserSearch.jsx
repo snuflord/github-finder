@@ -1,12 +1,13 @@
 import {useState, useContext} from 'react'
 import GlobalContext from '../../context/GlobalContext'
 import Alert from '../layout/Alert'
+import {searchUsers} from '../../context/github/GithubActions'
 
 function UserSearch() {
 
     // returning data and searchUsers function
 
-    const {users, searchUsers, clearUser} = useContext(GlobalContext)
+    const { users, dispatch } = useContext(GlobalContext)
 
     // for Alert toggle
     const [isFailed, setIsFailed] = useState(false)
@@ -22,7 +23,7 @@ function UserSearch() {
     }
 
     // triggered by clicking 'go' button
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         
         if(text === "") {
@@ -35,15 +36,12 @@ function UserSearch() {
         }, 5000)
             
         } else {
+            dispatch({type: 'SET_LOADING'})
             // text from useState-text-from input-value
-            searchUsers(text)
+            const users = await searchUsers(text)
+            dispatch({type: 'GET_USERS', payload: users}) 
             setText("")
         }
-    }
-
-    const clearSubmit = (e) => {
-        e.preventDefault()
-        clearUser()
     }
 
   return (
@@ -63,7 +61,8 @@ function UserSearch() {
         </div>
         {/* if users array is more than 0, allow clearSubmit to fire */}
         {users.length > 0 && (<div>
-            <button onClick={clearSubmit} className="btn btn-ghost btn-lg rounded-lg">Clear</button>
+            {/* we can call the reducer dispatch function directly from global context: clear users - dispatches action to update state and set to empty array, */}
+            <button onClick={() => dispatch({type: 'CLEAR_USERS'})} className="btn btn-ghost btn-lg rounded-lg">Clear</button>
         </div>)}
     </div>
   )

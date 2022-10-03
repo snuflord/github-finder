@@ -5,16 +5,28 @@ import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa'
 import {Link} from 'react-router-dom'
 import Spinner from '../components/layout/Spinner'
 import RepoResults from '../components/repos/RepoResults'
+import {getUserAndRepos} from '../context/github/GithubActions'
 
 function User() {
 
-  const {getUser, getUserRepos, user, loading, repos} = useContext(GlobalContext)
+  const { dispatch, user, loading, repos } = useContext(GlobalContext)
   const params = useParams()
 
+  // HERE, instead of updating the data through Global Context, the functions that handle data are called directly from functions in GithubActions: getUser, and getUserRepos. These functions contain the returned data from the fetch requests for both the user profile and user repos. Remember, 'dispatch' is contiguous with the initial state, therefore the state can be updated here by dispatching the action to the GlobalReducer, which handles updating the state data.
+
   useEffect(() => {
-    getUser(params.login)
-    getUserRepos(params.login)
-  }, [])
+
+    dispatch({type: 'SET_LOADING'})
+
+    const getUserData = async () => {
+
+      const userData = await getUserAndRepos(params.login)
+      dispatch({type: 'GET_USER_AND_REPOS', payload: userData})
+
+    }
+
+    getUserData()
+  }, [dispatch, params.login])
 
   // Destructuring 'user' (contains all API data) to individual parts
   const {
