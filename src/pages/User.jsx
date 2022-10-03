@@ -20,11 +20,12 @@ function User() {
 
     const getUserData = async () => {
 
+      // The data returned from getUserAndRepos (wich contains the get requets for both the profile and repos) is then dispatched to the globalReducer here. The state updates, and then the updated data is called again...
       const userData = await getUserAndRepos(params.login)
       dispatch({type: 'GET_USER_AND_REPOS', payload: userData})
 
     }
-
+    // called again here. With all the updated data returned, the constituent parts of the state (user, repos etc) can be called. 
     getUserData()
   }, [dispatch, params.login])
 

@@ -1,3 +1,4 @@
+// we have imported axios so that we can group two get requests in the Promise.all function. 
 import axios from 'axios'
 
 const GITHUB_URL = process.env.REACT_APP_GITHUB_URL
@@ -26,6 +27,6 @@ export const getUserAndRepos = async(login) => {
         github.get(`/users/${login}`),
         github.get(`/users/${login}/repos`)
     ])
-
+    // We can group two get requets togrther like so - These objects are returned to the GlobalReducer in 'GET_USER_AND_REPOS' to update the state. The state is updated when the action is called for this getUserAndRepos function in the User useEffect hook. 
     return {user: user.data, repos: repos.data}
 }
